@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+".\objects\delay.o"
+".\objects\sys.o"
+".\objects\usart.o"
+".\objects\test.o"
+".\objects\car.o"
+".\objects\iic.o"
+".\objects\mpu6050.o"
+".\objects\inv_mpu.o"
+".\objects\inv_mpu_dmp_motion_driver.o"
+".\objects\hc06.o"
+".\objects\88led.o"
+".\objects\echo.o"
+".\objects\hongwai.o"
+".\objects\pid.o"
+".\objects\remote.o"
+".\objects\tb6612.o"
+".\objects\timer.o"
+".\objects\buzzer.o"
+".\objects\startup_stm32f10x_hd.o"
+".\objects\system_stm32f10x.o"
+--strict --scatter ".\Objects\test.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\test.map" -o .\Objects\test.cpp

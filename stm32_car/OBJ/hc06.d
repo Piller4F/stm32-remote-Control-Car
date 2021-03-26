@@ -1,0 +1,9 @@
+..\obj\hc06.o: ..\HARDWARE\hc06\hc06.c
+..\obj\hc06.o: ..\HARDWARE\hc06\hc06.h
+..\obj\hc06.o: ..\SYSTEM\sys\sys.h
+..\obj\hc06.o: ..\SYSTEM\sys\stm32f10x.h
+..\obj\hc06.o: ..\SYSTEM\sys\core_cm3.h
+..\obj\hc06.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\hc06.o: ..\SYSTEM\sys\system_stm32f10x.h
+..\obj\hc06.o: ..\SYSTEM\usart\usart.h
+..\obj\hc06.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h

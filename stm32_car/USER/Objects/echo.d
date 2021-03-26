@@ -1,0 +1,10 @@
+.\objects\echo.o: ..\HARDWARE\echo\echo.c
+.\objects\echo.o: ..\HARDWARE\echo\echo.h
+.\objects\echo.o: ..\SYSTEM\sys\sys.h
+.\objects\echo.o: ..\SYSTEM\sys\stm32f10x.h
+.\objects\echo.o: ..\SYSTEM\sys\core_cm3.h
+.\objects\echo.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\echo.o: ..\SYSTEM\sys\system_stm32f10x.h
+.\objects\echo.o: ..\SYSTEM\delay\delay.h
+.\objects\echo.o: ..\SYSTEM\usart\usart.h
+.\objects\echo.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
