@@ -28,17 +28,17 @@
 
 ​		本项目使用一块手带设备控制小车的行走，因此该项目需要两块主控，一个用于获取手势数据，另一个则用于控制小车。对于手带设备要求必须小巧、稳定，因此采用STM32F103C8T6作为主控，获取手势数据并进行相应处理。小车的功能较多，从而需要相对多的引脚，本次采用STM32F103RCT6作为小车的主控，控制小车行走以及人机交互。
 
-# ![系统总体设计概念图.png](https://i.loli.net/2021/03/28/5szcvKrWVZi63Ap.png)
+![系统总体设计概念图.png](https://i.loli.net/2021/03/28/5szcvKrWVZi63Ap.png)
 
 ​		手带设备主要由STM32F103CT86最小系统板、MPU6050三维角度加速度陀螺仪传感器、HC-05蓝牙模块、降压模块组成。最小系统板可以读取MPU6050经DMP姿态解算后的欧拉角数据，将其以数据帧的形式通过HC-05发送给小车。
 
-# ![手带设备架构图.png](https://i.loli.net/2021/03/28/6cLojqMpWngRz82.png)
+![手带设备架构图.png](https://i.loli.net/2021/03/28/6cLojqMpWngRz82.png)
 
 ### 2.2 小车架构
 
 ​		STM32小车主要由一个STM32F103RCT6作为主控，并使用两个直流电机作为动力。人机交互使用一块8×8点阵LED模块，用于显示当前小车的行驶状态。小车接收到手带设备发送的数据帧后进行解析，得到欧拉角从而控制小车的行驶。
 
-# ![小车架构图.png](https://i.loli.net/2021/03/28/5XcZof2Ri7ALVnI.png)
+![小车架构图.png](https://i.loli.net/2021/03/28/5XcZof2Ri7ALVnI.png)
 
 ### 2.3 软件架构
 
@@ -56,60 +56,60 @@
 
 ​		最小系统为能够使单片机能够正常运行，且必须使用最少必须器件组成的系统。一般单片机最小系统上电之后，单片机可以正常复位、下载运行程序，除此之外没有任何功能。因此一般我们可以在最小系统板的基础上添加其它功能模块或器件，使单片机具有实际功能。本次项目手带设备只需要进行数据读取以及发送即可，并不需要多余的外设，因此使用C8T6型号的最小系统板完全能够满足需求。最小系统板的价格相对低廉，大大降低了该项目开发成本。
 
-# ![STM32F103C8T6最小系统板引脚图.png](https://i.loli.net/2021/03/28/UYyTPLMwtJKNfVR.png)
+![STM32F103C8T6最小系统板引脚图.png](https://i.loli.net/2021/03/28/UYyTPLMwtJKNfVR.png)
 
 #### 3.1.2 MPU6050模块
 
-# ![MPU6050模块.png](https://i.loli.net/2021/03/28/Sc5mUf9EMhgOlaZ.png)
+![MPU6050模块.png](https://i.loli.net/2021/03/28/Sc5mUf9EMhgOlaZ.png)
 
 ​		MPU-60X0将3轴陀螺仪，3轴加速度计和数字运动处理器（DMP）组合在一起。通过I2C总线可以接受外部3轴罗盘的输入，提供9轴输出。MPU-60X0具有三个用于数字化陀螺仪输出的16位ADC转换器和三个用于数字化加速度计输出的16位ADC转换器。在本项目中该模块是手带设备的核心，STM32最小系统板获取MPU6050经过DMP姿态解算后的欧拉角作为小车行驶的依据。
 
-# ![MPU6050参数.png](https://i.loli.net/2021/03/28/jieo84mZAH1NrIR.png)
+![MPU6050参数.png](https://i.loli.net/2021/03/28/jieo84mZAH1NrIR.png)
 
 #### 3.1.3 LM2596S降压模块
-# ![LM2596S降压模块.jpg](https://i.loli.net/2021/03/28/Iw59uAfkCKeUpbZ.jpg)
+![LM2596S降压模块.jpg](https://i.loli.net/2021/03/28/Iw59uAfkCKeUpbZ.jpg)
 
 ​		电源模块采用7.4V可充电锂电池作为主要供电，开发板电压需要在5V以下，所以需要使用LM2596S模块进行降压处理.，该模块顺时针调节升压，逆时针调节降压。
 
-# ![LM2596S降压模块参数.png](https://i.loli.net/2021/03/28/Imo5KgRjk4NXSCZ.png)
+![LM2596S降压模块参数.png](https://i.loli.net/2021/03/28/Imo5KgRjk4NXSCZ.png)
 
 ​		由于开发板支持5V电压输入，需要将电压降至不大于5V。输入电压可以为3.2至35V，输出电压1.25至30V，注意输入电压需高于输出电压1.5V，不可用于升压。顺时针调节升压，逆时针调节降压。
 
 #### 3.1.4 HC-05蓝牙模块
 
-# ![HC-05蓝牙模块.png](https://i.loli.net/2021/03/28/IDWucwFMvUhNs6O.png)
+![HC-05蓝牙模块.png](https://i.loli.net/2021/03/28/IDWucwFMvUhNs6O.png)
 
 ​		HC-05蓝牙模块是主从一体的蓝牙串口模块，通常当蓝牙设备配对连接成功后，我们可忽略蓝牙内部的通信协议，直接把蓝牙当做串口使用。建立连接后，两个设备共同使用一个串口，一个设备发送数据到通道中，另一个设备便可以接受通道中的数据。
 
 ​		该蓝牙模块具有两种工作模式：命令响应工作模式和自动连接工作模式，在自动连接工作模式下模块又可分为主（Master）、从（Slave）和回环（Loopback）三种工作角色。当模块处于自动连接工作模式时，将自动根据事先设定的方式连接的数据传输；当模块处于命令响应工作模式时能执行下述所有 AT 命令，用户可向模块发送各种 AT 指令，为模块设定控制参数或发布控制命令。通过控制模块外部按键，可以实现模块工作状态的动态转换。其中LED的闪烁状态代表这蓝牙模块当前工作状态。
 
-# ![HC-05蓝牙模块指示灯.png](https://i.loli.net/2021/03/28/7E9L6pighjwcAQo.png)
+![HC-05蓝牙模块指示灯.png](https://i.loli.net/2021/03/28/7E9L6pighjwcAQo.png)
 
 ### 3.2 智能小车
 
 #### 3.2.1 STM32F103RCT6开发板
 
-# ![STM32F103RCT6开发板.png](https://i.loli.net/2021/03/28/FdvNV72gtimf1De.png)
+![STM32F103RCT6开发板.png](https://i.loli.net/2021/03/28/FdvNV72gtimf1De.png)
 
 ​		本次智能小车使用ALIENYEK MiniSTM32开发板作为主控板，主芯片为STM32F103RCT6(64)引脚，芯片FLASH:256K，芯片SRAM:48K，板内软、硬件资源丰富、操作简单。从成本、复杂程度综合进行考量，使用该开发板制作智能小车是不错的选择。
 
 #### 3.2.2 TB6612FNG
 
-# ![Tb6612fng模块.png](https://i.loli.net/2021/03/28/uWEl9OeRM8TKCvX.png)
+![Tb6612fng模块.png](https://i.loli.net/2021/03/28/uWEl9OeRM8TKCvX.png)
 
 ​		TB6612FNG是东芝半导体公司生产的一款直流电机驱动器件，它具有大电流MOSFET-H桥结构，双通道电路输出，可同时驱动2个电机。TB6612FNG每通道输出高1A的连续驱动电流，启动峰值电流达2A/3A(连续脉冲/单脉冲)。
 
 ​		4种电机驱动模式：正转/反转/制动/停止。PWM支持频率高达100kHz，待机状态。片内低电压检测电路与热停机保护电路。
 
-# ![Tb6612fng逻辑真值表.png](https://i.loli.net/2021/03/28/ULOu52nYxpZatIi.png)
+![Tb6612fng逻辑真值表.png](https://i.loli.net/2021/03/28/ULOu52nYxpZatIi.png)
 
 #### 3.2.3 8X8点阵LED
 
-# ![8X8点阵LED模块.png](https://i.loli.net/2021/03/28/kVjr5G9OUK6ibzc.png)
+![8X8点阵LED模块.png](https://i.loli.net/2021/03/28/kVjr5G9OUK6ibzc.png)
 
 ​		本次项目中智能小车部分将使用8*8点阵LED作为显示模块，根据小车的行驶状态会有相应的图案显示。使用的共阳点阵LED模块的原理如图3-7所示。
 
-# ![8X8点阵LED原理图.png](https://i.loli.net/2021/03/28/Lg6uSQJt3qnjZU9.png)
+![8X8点阵LED原理图.png](https://i.loli.net/2021/03/28/Lg6uSQJt3qnjZU9.png)
 
 ## 第四章 系统软件设计
 
@@ -123,29 +123,29 @@
 
 ​		IIC 的主要构成只有两个双向的信号线，一个是数据线 SDA,一个是时钟线 SCL。MPU6050与MCU通过I2C总线进行通信，用软件模拟的方式实现 I2C 底层基本时序函数，包括起始、停止信号的产生，以及发送/接收单字节数据、检测/发送应答信号。
 
-# ![IIC总线图.png](https://i.loli.net/2021/03/28/UvF1pycjsh82Xix.png)
+![IIC总线图.png](https://i.loli.net/2021/03/28/UvF1pycjsh82Xix.png)
 
 #### 4.1.2 MPU6050原始数据读取
 
 使用I2C读取MPU6050原始数据时需要将MPU6050内部寄存器恢复默认值，然后配置该模块的一些参数。根据I2C数据传输格式，读取相关寄存器，得到加速度传感器、角速度传感器和温度传感器的数据。
 
-# ![IIC数据传输格式.png](https://i.loli.net/2021/03/28/c6amUbOt8hgvCDZ.png)
+![IIC数据传输格式.png](https://i.loli.net/2021/03/28/c6amUbOt8hgvCDZ.png)
 
 以读取MPU6050中某一寄存器为例，数据获取的流程图如图4-3所示。
 
-# <img src="https://i.loli.net/2021/03/28/DFBT6iPLpn2KyCc.jpg" alt="MPU6050数据读取.jpg" style="zoom: 50%;" />
+<img src="https://i.loli.net/2021/03/28/DFBT6iPLpn2KyCc.jpg" alt="MPU6050数据读取.jpg" style="zoom: 50%;" />
 
 #### 4.1.3 DMP姿态解算
 
 ​		读取的MPU6050原始数据并不能直接使用，我们需要的时姿态数据即欧拉角：航向角（yaw）、横滚角（roll）、和俯仰角（pitch）。要得到欧拉角数据，需利用我们得到的原始数据，进行姿态融合解算，直接计算是比较复杂的，但MPU6050 自带了数字运动处理器 DMP，并且，InvenSense 提供了一个 MPU6050 的嵌入式运动驱动库，结合 MPU6050 的 DMP，可以将得到的原始数据，直接转换成四元数输出，而得到四元数之后，就可以很方便的计算出欧拉角，从而得到 yaw、 roll 和 pitch。
 
-# ![欧拉角.png](https://i.loli.net/2021/03/28/wfZl6UgbsGeArh2.png)
+![欧拉角.png](https://i.loli.net/2021/03/28/wfZl6UgbsGeArh2.png)
 
 ​		通过 MPU6050 的 DMP 输出的四元数是 q30 格式的，也就是浮点数放大了 2 的 30 次方倍。在换算成欧拉角之前，必须先将其转换为浮点数，也就是除以 2 的 30 次方，然后再进行计算，计算公式为：
 
-# ![公式.png](https://i.loli.net/2021/03/28/AucFQqRZUoVkmxj.png)
+![公式.png](https://i.loli.net/2021/03/28/AucFQqRZUoVkmxj.png)
 
-# ![欧拉角参数.png](https://i.loli.net/2021/03/28/xK6YE3zWtDIAXgQ.png)
+![欧拉角参数.png](https://i.loli.net/2021/03/28/xK6YE3zWtDIAXgQ.png)
 
 ### 4.2 姿态数据帧封装及解析
 
@@ -153,13 +153,13 @@
 
 ​		HC-05蓝牙模块在接口技术上使用的是USART通信，因此我们只需要配置相应的USART即可正常的使用蓝牙模块。在本项目中我们自己制定了一个简单的数据传输协议，当两个数据接收的时间间隔大于10ms时则认为当前的一个数据款传输完毕。该协议中接收数据的流程如图4-5所示。
 
-# <img src="https://i.loli.net/2021/03/28/wAgzs7YB3f2Cky6.jpg" alt="数据接受协议.jpg" style="zoom:50%;" />
+<img src="https://i.loli.net/2021/03/28/wAgzs7YB3f2Cky6.jpg" alt="数据接受协议.jpg" style="zoom:50%;" />
 
 #### 4.2.2 姿态数据封装
 
 ​		该项目中手带设备需要将获取的手势姿态数据通过蓝牙发送给小车。姿态数据为欧拉角，则是由航向角（yaw）、横滚角（roll）、和俯仰角（pitch）组成。因此需要将这三个数据封装成一个数据帧发送给智能小车。我们规定一个数据帧的组成如图4-6所示。
 
-# ![姿态数据帧.png](https://i.loli.net/2021/03/28/CX3rUgD2uNTM9G6.png)
+![姿态数据帧.png](https://i.loli.net/2021/03/28/CX3rUgD2uNTM9G6.png)
 
 ​		一个姿态数据由以逗号分隔的三个浮点数组成，将该数据转化为一个字符串作为姿态数据帧。
 
@@ -167,7 +167,7 @@
 
 ​		智能小车接收姿态数据帧后，需要将该数据帧进行解析，把字符串分隔三个字串，将其分别转化为浮点数保存到变量中。然后使用解析后的欧拉角来决定小车的行驶方式。该算法的流程如图4-7所示。
 
-# ![姿态数据解算.png](https://i.loli.net/2021/03/28/lSE6YmKQnqL7Oe5.png)
+![姿态数据解算.png](https://i.loli.net/2021/03/28/lSE6YmKQnqL7Oe5.png)
 
 ### 4.3 智能小车控制
 
@@ -183,15 +183,15 @@
 
 ​		小车收到姿态数据帧并解析完毕后可以获得手带设备的欧拉角，行驶方式则跟着手带设备角度的变化而变化。该程序流程如图4-8所示。
 
-# <img src="https://i.loli.net/2021/03/28/2aoS7B4DeAu5jI3.jpg" alt="小车控制流程.jpg" style="zoom:50%;" />
+<img src="https://i.loli.net/2021/03/28/2aoS7B4DeAu5jI3.jpg" alt="小车控制流程.jpg" style="zoom:50%;" />
 
 ## 第五章 系统测试
 
 ### 5.1 手带设备姿态数据获取测试
 
-# ![手带设备正面图.jpg](https://i.loli.net/2021/03/28/LuPx4gOTjBJ1IX8.jpg)
+![手带设备正面图.jpg](https://i.loli.net/2021/03/28/LuPx4gOTjBJ1IX8.jpg)
 
-# ![手带设备背面图.jpg](https://i.loli.net/2021/03/28/xfutQRwTYWCom42.jpg)
+![手带设备背面图.jpg](https://i.loli.net/2021/03/28/xfutQRwTYWCom42.jpg)
 
 ​		测试方案：佩戴并开启手带设备，等待MPU6050初始化完毕后，转动手腕并观察当前串口调试助手中的数值变化。尽可能幅度较大的转动以检查该设备在实际运用中的效果。
 
@@ -199,7 +199,7 @@
 
 ​		结果分析：测试的过程中发现，有概率发生数据传送失误，明显可以看出在转动手腕时，部分数据变化幅度较大，因此可以使用软件滤波解决该问题。
 
-# ![手带设备欧拉角获取.png](https://i.loli.net/2021/03/28/WjogCd7NphJFD8v.png)
+![手带设备欧拉角获取.png](https://i.loli.net/2021/03/28/WjogCd7NphJFD8v.png)
 
 ### 5.2 手势控制小车测试
 
@@ -209,9 +209,9 @@
 
 ​		结果分析：由于使用蓝牙传输的过程中会有部分数据传送失败，因此需要将错误数据全部去除，从而到时手带设备与小车直接的数据传输有70ms左右的延迟。
 
-# ![手势控制小车测试.png](https://i.loli.net/2021/03/28/zvkIrKSZTOl2Hxg.png)
+![手势控制小车测试.png](https://i.loli.net/2021/03/28/zvkIrKSZTOl2Hxg.png)
 
-# ![手势控制小车测试2.png](https://i.loli.net/2021/03/28/yc83XISJHwDlQ9G.png)
+![手势控制小车测试2.png](https://i.loli.net/2021/03/28/yc83XISJHwDlQ9G.png)
 
 ## 参考文献
 
